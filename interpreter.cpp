@@ -16,7 +16,7 @@ string read_file(string filename)
 int main()
 {
 
-    string file_contents = read_file("test.sm");
+    string file_contents = read_file("src.sm");
     cout << file_contents << endl;
 
     return 0;
