@@ -1,5 +1,7 @@
 %{
     #include <stdio.h>
+
+    extern yyparse()
 %}
 
 %union {
@@ -11,6 +13,7 @@
 %token <int_val> INT
 %token <float_val> FLOAT
 %token <string_val> STRING
+%token <string_val> PRINT
 
 
 %%
@@ -35,9 +38,10 @@ statement:
   | STRING         {
       cout << "bison found a string: " << $1 << endl; free($1);
     }
-  ;
-
-print:
+  | PRINT STRING {
+      cout << $2; free($2);
+  }
+;
 
 %%
 int main()
