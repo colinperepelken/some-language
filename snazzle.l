@@ -1,6 +1,7 @@
 %{
   #include "snazzle.tab.h"
 %}
+%option noyywrap
 %%
 [ \t\n] ;
 sNaZZle        { return SNAZZLE; }
