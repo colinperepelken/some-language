@@ -3,8 +3,10 @@
 #include <sstream>
 #include <algorithm>
 #include <iterator>
+#include "grammar.tab.h"
 
 using namespace std;
+
 
 enum Token {
   tok_eof = -1,
@@ -43,10 +45,10 @@ static int GetToken() {
     }
 
     if (IdentifierString == "print") {
-      return tok_print;
+      return PRINT;
     }
 
-    return tok_identifier;
+    return STRING;
   }
 
   if (isdigit(LastChar) || LastChar == '.') {
