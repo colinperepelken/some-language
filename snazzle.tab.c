@@ -62,11 +62,20 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "grammar.y" /* yacc.c:339  */
+#line 1 "snazzle.y" /* yacc.c:339  */
 
-    #include <stdio.h>
+  #include <cstdio>
+  #include <iostream>
+  using namespace std;
 
-#line 70 "grammar.tab.c" /* yacc.c:339  */
+  // stuff from flex that bison needs to know about:
+  extern int yylex();
+  extern int yyparse();
+  extern FILE *yyin;
+ 
+  void yyerror(const char *s);
+
+#line 79 "snazzle.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -85,9 +94,9 @@
 #endif
 
 /* In a future release of Bison, this section will be replaced
-   by #include "grammar.tab.h".  */
-#ifndef YY_YY_GRAMMAR_TAB_H_INCLUDED
-# define YY_YY_GRAMMAR_TAB_H_INCLUDED
+   by #include "snazzle.tab.h".  */
+#ifndef YY_YY_SNAZZLE_TAB_H_INCLUDED
+# define YY_YY_SNAZZLE_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -101,9 +110,13 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    INT = 258,
-    FLOAT = 259,
-    STRING = 260
+    SNAZZLE = 258,
+    TYPE = 259,
+    END = 260,
+    PRINT = 261,
+    INT = 262,
+    FLOAT = 263,
+    STRING = 264
   };
 #endif
 
@@ -112,13 +125,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 5 "grammar.y" /* yacc.c:355  */
+#line 14 "snazzle.y" /* yacc.c:355  */
 
-    int int_val;
-    float float_val;
-    char *string_val;
+  int ival;
+  float fval;
+  char *sval;
 
-#line 122 "grammar.tab.c" /* yacc.c:355  */
+#line 135 "snazzle.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -131,11 +144,11 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_GRAMMAR_TAB_H_INCLUDED  */
+#endif /* !YY_YY_SNAZZLE_TAB_H_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
 
-#line 139 "grammar.tab.c" /* yacc.c:358  */
+#line 152 "snazzle.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -377,21 +390,21 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  5
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   8
+#define YYLAST   2
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  6
+#define YYNTOKENS  10
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  2
+#define YYNNTS  3
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  7
+#define YYNRULES  3
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  9
+#define YYNSTATES  6
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   260
+#define YYMAXUTOK   264
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -426,14 +439,14 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5
+       5,     6,     7,     8,     9
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    20,    20,    23,    26,    29,    32,    35
+       0,    36,    36,    39
 };
 #endif
 
@@ -442,8 +455,8 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "INT", "FLOAT", "STRING", "$accept",
-  "statement", YY_NULLPTR
+  "$end", "error", "$undefined", "SNAZZLE", "TYPE", "END", "PRINT", "INT",
+  "FLOAT", "STRING", "$accept", "program", "print", YY_NULLPTR
 };
 #endif
 
@@ -452,14 +465,14 @@ static const char *const yytname[] =
    (internal) symbol number NUM (which must be that of a token).  */
 static const yytype_uint16 yytoknum[] =
 {
-       0,   256,   257,   258,   259,   260
+       0,   256,   257,   258,   259,   260,   261,   262,   263,   264
 };
 # endif
 
-#define YYPACT_NINF -1
+#define YYPACT_NINF -9
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-1)))
+  (!!((Yystate) == (-9)))
 
 #define YYTABLE_NINF -1
 
@@ -470,7 +483,7 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-       3,    -1,    -1,    -1,     0,    -1,    -1,    -1,    -1
+      -6,    -8,     2,    -9,    -9,    -9
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -478,19 +491,19 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     5,     6,     7,     0,     1,     2,     3,     4
+       0,     0,     0,     2,     3,     1
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -1,    -1
+      -9,    -9,    -9
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     4
+      -1,     2,     3
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -498,31 +511,31 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-       5,     0,     0,     6,     7,     8,     1,     2,     3
+       1,     4,     5
 };
 
-static const yytype_int8 yycheck[] =
+static const yytype_uint8 yycheck[] =
 {
-       0,    -1,    -1,     3,     4,     5,     3,     4,     5
+       6,     9,     0
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     3,     4,     5,     7,     0,     3,     4,     5
+       0,     6,    11,    12,     9,     0
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,     6,     7,     7,     7,     7,     7,     7
+       0,    10,    11,    12
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     2,     2,     2,     1,     1,     1
+       0,     2,     1,     2
 };
 
 
@@ -1198,56 +1211,16 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 2:
-#line 20 "grammar.y" /* yacc.c:1646  */
+        case 3:
+#line 39 "snazzle.y" /* yacc.c:1646  */
     {
-      cout << "bison found an int: " << (yyvsp[0].int_val) << endl;
-    }
-#line 1207 "grammar.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 3:
-#line 23 "grammar.y" /* yacc.c:1646  */
-    {
-      cout << "bison found a float: " << (yyvsp[0].float_val) << endl;
-    }
-#line 1215 "grammar.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 4:
-#line 26 "grammar.y" /* yacc.c:1646  */
-    {
-      cout << "bison found a string: " << (yyvsp[0].string_val) << endl; free((yyvsp[0].string_val));
-    }
-#line 1223 "grammar.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 5:
-#line 29 "grammar.y" /* yacc.c:1646  */
-    {
-      cout << "bison found an int: " << (yyvsp[0].int_val) << endl;
-    }
-#line 1231 "grammar.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 6:
-#line 32 "grammar.y" /* yacc.c:1646  */
-    {
-      cout << "bison found a float: " << (yyvsp[0].float_val) << endl;
-    }
-#line 1239 "grammar.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 7:
-#line 35 "grammar.y" /* yacc.c:1646  */
-    {
-      cout << "bison found a string: " << (yyvsp[0].string_val) << endl; free((yyvsp[0].string_val));
-    }
-#line 1247 "grammar.tab.c" /* yacc.c:1646  */
+    cout << (yyvsp[0].sval); free((yyvsp[0].sval));
+  }
+#line 1220 "snazzle.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1251 "grammar.tab.c" /* yacc.c:1646  */
+#line 1224 "snazzle.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1475,10 +1448,26 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 42 "grammar.y" /* yacc.c:1906  */
+#line 45 "snazzle.y" /* yacc.c:1906  */
 
-int main()
-{
-    yyparse(); // Parse through the input.
-    return 0;
+
+int main(int, char**) {
+  // open a file handle to a particular file:
+  FILE *myfile = fopen("in.snazzle", "r");
+  // make sure it's valid:
+  if (!myfile) {
+    cout << "I can't open a.snazzle.file!" << endl;
+    return -1;
+  }
+  // Set flex to read from it instead of defaulting to STDIN:
+  yyin = myfile;
+
+  // Parse through the input:
+  yyparse();
+}
+
+void yyerror(const char *s) {
+  cout << "EEK, parse error!  Message: " << s << endl;
+  // might as well halt now:
+  exit(-1);
 }
