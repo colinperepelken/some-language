@@ -48,9 +48,10 @@ extern int yydebug;
     SNAZZLE = 258,
     TYPE = 259,
     END = 260,
-    INT = 261,
-    FLOAT = 262,
-    STRING = 263
+    PRINT = 261,
+    INT = 262,
+    FLOAT = 263,
+    STRING = 264
   };
 #endif
 
@@ -65,7 +66,7 @@ union YYSTYPE
   float fval;
   char *sval;
 
-#line 69 "snazzle.tab.h" /* yacc.c:1909  */
+#line 70 "snazzle.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

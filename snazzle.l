@@ -1,9 +1,11 @@
 %{
   #include "snazzle.tab.h"
+  #include <string.h>
 %}
 %option noyywrap
 %%
 [ \t\n] ;
+print          { return PRINT;  }
 sNaZZle        { return SNAZZLE; }
 type           { return TYPE; }
 end            { return END; }
